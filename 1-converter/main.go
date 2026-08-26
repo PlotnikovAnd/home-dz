@@ -2,10 +2,10 @@ package main
 
 import "fmt"
 
-const usdToEurRate float64 = 0.86
-const usdToRubRate float64 = 84.37
+const eurFor1UsdRate float64 = 0.86
+const rubFor1UsdRate float64 = 84.37
+const eurToRubRate float64 = rubFor1UsdRate / eurFor1UsdRate
 
 func main() {
-	fmt.Println("usd to eur const:", usdToEurRate)
-	fmt.Println("usd to rub const:", usdToRubRate)
+	fmt.Println("rub for 1 eur:", eurToRubRate)
 }
