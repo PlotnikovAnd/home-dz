@@ -1,0 +1,43 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+
+	fmt.Println("__ Body Mass Calculator __")
+
+	userWeight, userHeight := getUserInput()
+	result := calculateIMT(userWeight, userHeight)
+
+	outputResult(result)
+}
+
+func getUserInput() (userWeight, userHeight float64) {
+
+	fmt.Print("Enter your height, cm: ")
+	_, err := fmt.Scan(&userHeight)
+	if err != nil {
+		fmt.Println("invalid input:", err)
+		return 0, 0
+	}
+
+	fmt.Print("Enter your weight, kg: ")
+	_, err = fmt.Scan(&userWeight)
+	if err != nil {
+		fmt.Println("invalid input:", err)
+		return 0, 0
+	}
+	return userWeight, userHeight
+}
+
+func calculateIMT(weight, height float64) float64 {
+	return weight / (height / 100 * height / 100)
+}
+
+func outputResult(imt float64) {
+
+	result := fmt.Sprintf("Index of Body Mass: %+.2f", imt)
+	fmt.Print(result)
+}
