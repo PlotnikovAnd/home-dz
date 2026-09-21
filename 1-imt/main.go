@@ -5,8 +5,32 @@ import (
 	"fmt"
 )
 
-func getUserInput() (float64, float64, error) {
-	var w, h float64
+func main() {
+
+	fmt.Println("__ Body Mass Calculator __")
+
+	userWeight, userHeight := getUserInput()
+	resultIMT := calculateIMT(userWeight, userHeight)
+
+	var resultStatement string
+	switch {
+	case resultIMT < 16:
+		resultStatement = "High mass deficit"
+	case resultIMT < 18.5:
+		resultStatement = "Mass deficit"
+	case resultIMT < 25:
+		resultStatement = "Normal"
+	case resultIMT < 30:
+		resultStatement = "Higher than normal"
+	default:
+		resultStatement = "Obesity degree"
+	}
+
+	outputResult(resultIMT, resultStatement)
+}
+
+func getUserInput() (userWeight, userHeight float64) {
+
 	fmt.Print("Enter your height, cm: ")
 	_, err := fmt.Scan(&h)
 	if err != nil {
@@ -68,28 +92,6 @@ func checkRepeatCalculation() (bool, error) {
 	}
 }
 
-func main() {
-	fmt.Println("__ Body Mass Calculator __")
-	for {
-		weight, height, err := getUserInput()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		resultIMT, err := calculateBMI(weight, height)
-		if err != nil {
-			fmt.Printf("Error calculating IMT: %v\n", err)
-			return
-		}
-		fmt.Println(outputResult(resultIMT))
-
-		goNext, err := checkRepeatCalculation()
-		if err != nil {
-			fmt.Printf("Error while checking repeat calc: %v\n", err)
-			return
-		}
-		if !goNext {
-			return
-		}
-	}
+func outputResult(imt float64, resultStatement string) {
+	fmt.Printf("Index of Body Mass: %.2f. Its %s", imt, resultStatement)
 }
