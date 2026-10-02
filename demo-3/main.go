@@ -4,8 +4,8 @@ import (
 	"fmt"
 	
 	"github.com/fatih/color"
-	"demo/passmanager/files"
-	"demo/passmanager/account"
+	"demo/file"
+	"demo/account"
 )
 
 
@@ -28,7 +28,7 @@ func main() {
 		password,
 		url,
 	)
-	files.ReadFile()
+	file.ReadFile()
 	if err != nil {
 		color.Red(string(err.Error()))
 		return
