@@ -15,7 +15,7 @@ type account struct {
 }
 
 func (acc *account) OutputAccount() {
-	fmt.Println(&acc)
+	fmt.Println(*acc)
 }
 
 func (acc *account) generatePassword(n int) {
