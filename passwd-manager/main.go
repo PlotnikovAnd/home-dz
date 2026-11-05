@@ -2,6 +2,7 @@ package main
 
 import (
 	"demo/account"
+	"demo/files"
 	"fmt"
 
 	"github.com/fatih/color"
@@ -11,7 +12,7 @@ func main() {
 	welcomeMessage := "Меню:\n" +
 		`1 - Создать акк, 2 - Найти акк, 3 - Удалить акк, 4 - Вывести все, Другое - Выход` + "\n"
 
-	vault := account.NewValut()
+	vault := account.NewValut(files.NewJsonDb("data.json"))
 
 Menu:
 	for {
@@ -39,7 +40,7 @@ func promptData(prompt string) string {
 	return res
 }
 
-func createAccount(vault *account.Vault) {
+func createAccount(vault *account.VaultWithDb) {
 	login := promptData("Введите логин: ")
 	password := promptData("Введите пароль: ")
 	url := promptData("Введите URL: ")
@@ -52,7 +53,7 @@ func createAccount(vault *account.Vault) {
 	vault.AddAccount(*myAccount)
 }
 
-func findAccount(vault *account.Vault) {
+func findAccount(vault *account.VaultWithDb) {
 	url := promptData("Введите сайт для поиска: ")
 	accounts := vault.FindAccountsByUrl(url)
 	if len(accounts) == 0 {
@@ -64,7 +65,7 @@ func findAccount(vault *account.Vault) {
 	}
 }
 
-func deleteAccount(vault *account.Vault) {
+func deleteAccount(vault *account.VaultWithDb) {
 	// URL
 	// метод удаления vault
 	// проверка удалено или нет
@@ -74,12 +75,12 @@ func deleteAccount(vault *account.Vault) {
 		color.Red("Аккаунты не найдены")
 		return
 	}
-	resString := fmt.Sprintln("Аккаунты удалены:\n" , accs)
+	resString := fmt.Sprintln("Аккаунты удалены:\n", accs)
 	color.Green(resString)
 }
 
-func printAccounts(vault *account.Vault){
+func printAccounts(vault *account.VaultWithDb) {
 	for _, acc := range vault.Accounts {
-		color.Green(fmt.Sprint(acc.Url, " " , acc.CreatedAt))
+		color.Green(fmt.Sprint(acc.Url, " ", acc.CreatedAt))
 	}
 }
